@@ -48,9 +48,26 @@ const RoutineItem = ({ routine, onEdit, onDelete, onUpdate }) => {
           <div className="flex items-center justify-between">
             {/* Viewing Mode */}
             <div className="flex-1">
-              <h3 className="text-lg font-bold text-gray-700 break-words truncate">
-                {routine.routine}
-              </h3>
+              {/* Tooltip Implementation */}
+              <div
+                className="relative group"
+                style={{ maxWidth: "calc(100% - 80px)" }}
+              >
+                <h3
+                  className="overflow-hidden text-lg font-bold text-gray-700 break-words truncate"
+                  style={{
+                    whiteSpace: "normal",
+                    wordBreak: "break-word",
+                  }}
+                  title={routine.routine} // Tooltip for browser support
+                >
+                  {routine.routine}
+                </h3>
+                {/* Custom Tooltip */}
+                <div className="absolute left-0 z-10 hidden max-w-xs px-2 py-1 text-sm text-white whitespace-normal bg-gray-800 rounded-lg shadow-lg group-hover:block -top-8 w-max">
+                  {routine.routine}
+                </div>
+              </div>
               <p className="text-sm text-gray-500">{routine.time}</p>
             </div>
             <div className="flex space-x-2">
