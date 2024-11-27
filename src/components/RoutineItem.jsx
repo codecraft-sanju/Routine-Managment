@@ -9,25 +9,25 @@ const RoutineItem = ({ routine, onEdit, onDelete, onUpdate }) => {
   };
 
   return (
-    <li className="flex items-center justify-between bg-white p-4 rounded-lg shadow hover:shadow-lg">
+    <li className="flex items-center justify-between p-4 bg-white rounded-lg shadow hover:shadow-lg">
       {routine.isEditing ? (
         <div className="flex space-x-2">
           <input
             type="text"
             value={updatedRoutine}
             onChange={(e) => setUpdatedRoutine(e.target.value)}
-            className="border rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="px-2 py-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <input
             type="time"
             value={updatedTime}
             onChange={(e) => setUpdatedTime(e.target.value)}
-            className="border rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="px-2 py-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
       ) : (
         <div className="flex-1 min-w-0">
-          <h3 className="text-lg font-bold text-gray-700 truncate whitespace-normal break-words">
+          <h3 className="text-lg font-bold text-gray-700 break-words truncate whitespace-normal">
             {routine.routine}
           </h3>
           <p className="text-sm text-gray-500">{routine.time}</p>
@@ -37,21 +37,21 @@ const RoutineItem = ({ routine, onEdit, onDelete, onUpdate }) => {
         {routine.isEditing ? (
           <button
             onClick={saveChanges}
-            className="bg-blue-500 text-white px-2 py-1 rounded-lg hover:bg-blue-600"
+            className="px-2 py-1 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
           >
             Save
           </button>
         ) : (
           <button
             onClick={() => onEdit(routine.id)}
-            className="bg-yellow-500 text-white px-2 py-1 rounded-lg hover:bg-yellow-600"
+            className="px-2 py-1 text-white bg-yellow-500 rounded-lg hover:bg-yellow-600"
           >
             Edit
           </button>
         )}
         <button
           onClick={() => onDelete(routine.id)}
-          className="bg-red-500 text-white px-2 py-1 rounded-lg hover:bg-red-600"
+          className="px-2 py-1 text-white bg-red-500 rounded-lg hover:bg-red-600"
         >
           Delete
         </button>

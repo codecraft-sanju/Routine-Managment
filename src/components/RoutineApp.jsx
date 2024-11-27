@@ -22,7 +22,7 @@ const RoutineApp = ({ username }) => {
       alert("Please fill in all fields!");
     } else {
       const time = `${hour}:${minute} ${period}`;
-      const newRoutine = { id: Date.now(), routine, time, isEditing: false };
+      const newRoutine = { id: Date.now(), routine, time, isEditing: false, isCompleted: false };
       setRoutines([...routines, newRoutine]);
       setRoutine("");
       setHour("12");
@@ -53,6 +53,14 @@ const RoutineApp = ({ username }) => {
     );
   };
 
+  const toggleCompletion = (id) => {
+    setRoutines(
+      routines.map((r) =>
+        r.id === id ? { ...r, isCompleted: !r.isCompleted } : r
+      )
+    );
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("username");
     localStorage.removeItem("routines");
@@ -60,9 +68,9 @@ const RoutineApp = ({ username }) => {
   };
 
   return (
-    <div className="min-h-screen p-8 bg-gradient-to-br from-blue-100 to-purple-200">
+    <div className="min-h-screen p-4 md:p-8 bg-gradient-to-br from-blue-100 to-purple-200">
       <div className="mb-8 text-center">
-        <h1 className="text-4xl font-bold text-gray-800">Hello, {username}</h1>
+        <h1 className="text-3xl font-bold text-gray-800 md:text-4xl">Hello, {username}</h1>
         <p className="mt-2 text-gray-600">Manage your routines below:</p>
         <p className="mt-2 text-sm text-gray-500">Created by Sanjay</p>
         <button
@@ -73,14 +81,14 @@ const RoutineApp = ({ username }) => {
         </button>
       </div>
 
-      <div className="max-w-md mx-auto">
-        <div className="flex items-center space-x-4">
+      <div className="max-w-lg mx-auto">
+        <div className="flex flex-wrap items-center space-y-2 md:space-y-0 md:space-x-4">
           <input
             type="text"
             placeholder="Routine Name"
             value={routine}
             onChange={(e) => setRoutine(e.target.value)}
-            className="w-full px-4 py-2 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 border rounded-lg shadow md:flex-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <div className="flex items-center space-x-2">
             {/* Hours Dropdown */}
@@ -127,7 +135,7 @@ const RoutineApp = ({ username }) => {
           </div>
           <button
             onClick={addRoutine}
-            className="px-4 py-2 text-white transition bg-blue-600 rounded-lg hover:bg-blue-700"
+            className="w-full px-4 py-2 text-white transition bg-blue-600 rounded-lg md:w-auto hover:bg-blue-700"
           >
             Add
           </button>
@@ -140,6 +148,7 @@ const RoutineApp = ({ username }) => {
               onEdit={editRoutine}
               onDelete={deleteRoutine}
               onUpdate={updateRoutine}
+              onToggleCompletion={toggleCompletion}
             />
           ))}
         </ul>
