@@ -2,29 +2,32 @@ import React, { useState, useEffect } from "react";
 import RoutineItem from "./RoutineItem";
 
 const RoutineApp = ({ username }) => {
-  // Initialize routines from localStorage
   const [routines, setRoutines] = useState(() => {
     const savedRoutines = localStorage.getItem("routines");
-    return savedRoutines ? JSON.parse(savedRoutines) : []; // Load saved routines or set an empty array
+    return savedRoutines ? JSON.parse(savedRoutines) : [];
   });
 
   const [routine, setRoutine] = useState("");
-  const [time, setTime] = useState("");
+  const [hour, setHour] = useState("12");
+  const [minute, setMinute] = useState("00");
+  const [period, setPeriod] = useState("AM"); // AM or PM
+  const [showLogoutWarning, setShowLogoutWarning] = useState(false);
 
-  // Save routines to localStorage whenever routines state changes
   useEffect(() => {
     localStorage.setItem("routines", JSON.stringify(routines));
   }, [routines]);
 
   const addRoutine = () => {
-    if(!routine || !time) {
-      alert('Please select all field are required!')
-    }
-    if (routine && time) {
+    if (!routine) {
+      alert("Please fill in all fields!");
+    } else {
+      const time = `${hour}:${minute} ${period}`;
       const newRoutine = { id: Date.now(), routine, time, isEditing: false };
       setRoutines([...routines, newRoutine]);
       setRoutine("");
-      setTime("");
+      setHour("12");
+      setMinute("00");
+      setPeriod("AM");
     }
   };
 
@@ -63,12 +66,13 @@ const RoutineApp = ({ username }) => {
         <p className="mt-2 text-gray-600">Manage your routines below:</p>
         <p className="mt-2 text-sm text-gray-500">Created by Sanjay</p>
         <button
-          onClick={handleLogout}
+          onClick={() => setShowLogoutWarning(true)}
           className="px-4 py-2 mt-4 text-white transition bg-red-500 rounded-lg hover:bg-red-600"
         >
           Logout
         </button>
       </div>
+
       <div className="max-w-md mx-auto">
         <div className="flex items-center space-x-4">
           <input
@@ -78,12 +82,49 @@ const RoutineApp = ({ username }) => {
             onChange={(e) => setRoutine(e.target.value)}
             className="w-full px-4 py-2 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
-          <input
-            type="time"
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-            className="px-4 py-2 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-400"
-          />
+          <div className="flex items-center space-x-2">
+            {/* Hours Dropdown */}
+            <select
+              value={hour}
+              onChange={(e) => setHour(e.target.value)}
+              className="px-3 py-2 text-sm border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-400"
+            >
+              {Array.from({ length: 12 }, (_, i) => {
+                const value = (i + 1).toString().padStart(2, "0");
+                return (
+                  <option key={value} value={value}>
+                    {value}
+                  </option>
+                );
+              })}
+            </select>
+
+            {/* Minutes Dropdown */}
+            <select
+              value={minute}
+              onChange={(e) => setMinute(e.target.value)}
+              className="px-3 py-2 text-sm border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-400"
+            >
+              {Array.from({ length: 60 }, (_, i) => {
+                const value = i.toString().padStart(2, "0");
+                return (
+                  <option key={value} value={value}>
+                    {value}
+                  </option>
+                );
+              })}
+            </select>
+
+            {/* AM/PM Dropdown */}
+            <select
+              value={period}
+              onChange={(e) => setPeriod(e.target.value)}
+              className="px-3 py-2 text-sm border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-400"
+            >
+              <option value="AM">AM</option>
+              <option value="PM">PM</option>
+            </select>
+          </div>
           <button
             onClick={addRoutine}
             className="px-4 py-2 text-white transition bg-blue-600 rounded-lg hover:bg-blue-700"
@@ -103,6 +144,54 @@ const RoutineApp = ({ username }) => {
           ))}
         </ul>
       </div>
+
+      {showLogoutWarning && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="max-w-sm p-6 bg-white rounded-lg shadow-lg">
+            <h2 className="text-lg font-bold text-gray-800">
+              Are you sure you want to logout?
+            </h2>
+            <p className="mt-2 text-gray-600">
+              All your routines will be deleted permanently.
+            </p>
+            <div className="flex justify-end mt-4 space-x-4">
+              <button
+                onClick={() => setShowLogoutWarning(false)}
+                className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-100"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleLogout}
+                className="px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <footer className="mt-8 text-center">
+        <p className="text-sm text-gray-500">
+          Created by Sanjay |{" "}
+          <a
+            href="https://instagram.com/sanjuuu_x18"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:underline"
+          >
+            <span className="inline-block mr-1">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
+                alt="Instagram"
+                className="inline w-4 h-4"
+              />
+            </span>
+            @sanjuuu_x18
+          </a>
+        </p>
+      </footer>
     </div>
   );
 };
