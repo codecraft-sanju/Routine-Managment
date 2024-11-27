@@ -72,7 +72,6 @@ const RoutineApp = ({ username }) => {
       <div className="mb-8 text-center">
         <h1 className="text-3xl font-bold text-gray-800 md:text-4xl">Hello, {username}</h1>
         <p className="mt-2 text-gray-600">Manage your routines below:</p>
-        <p className="mt-2 text-sm text-gray-500">Created by Sanjay</p>
         <button
           onClick={() => setShowLogoutWarning(true)}
           className="px-4 py-2 mt-4 text-white transition bg-red-500 rounded-lg hover:bg-red-600"
@@ -91,7 +90,6 @@ const RoutineApp = ({ username }) => {
             className="w-full px-4 py-2 border rounded-lg shadow md:flex-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <div className="flex items-center space-x-2">
-            {/* Hours Dropdown */}
             <select
               value={hour}
               onChange={(e) => setHour(e.target.value)}
@@ -107,7 +105,6 @@ const RoutineApp = ({ username }) => {
               })}
             </select>
 
-            {/* Minutes Dropdown */}
             <select
               value={minute}
               onChange={(e) => setMinute(e.target.value)}
@@ -123,7 +120,6 @@ const RoutineApp = ({ username }) => {
               })}
             </select>
 
-            {/* AM/PM Dropdown */}
             <select
               value={period}
               onChange={(e) => setPeriod(e.target.value)}
@@ -148,59 +144,10 @@ const RoutineApp = ({ username }) => {
               onEdit={editRoutine}
               onDelete={deleteRoutine}
               onUpdate={updateRoutine}
-              onToggleCompletion={toggleCompletion}
             />
           ))}
         </ul>
       </div>
-
-      {showLogoutWarning && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="max-w-sm p-6 bg-white rounded-lg shadow-lg">
-            <h2 className="text-lg font-bold text-gray-800">
-              Are you sure you want to logout?
-            </h2>
-            <p className="mt-2 text-gray-600">
-              All your routines will be deleted permanently.
-            </p>
-            <div className="flex justify-end mt-4 space-x-4">
-              <button
-                onClick={() => setShowLogoutWarning(false)}
-                className="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-100"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleLogout}
-                className="px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600"
-              >
-                Logout
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      <footer className="mt-8 text-center">
-        <p className="text-sm text-gray-500">
-          Created by Sanjay |{" "}
-          <a
-            href="https://instagram.com/sanjuuu_x18"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-500 hover:underline"
-          >
-            <span className="inline-block mr-1">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
-                alt="Instagram"
-                className="inline w-4 h-4"
-              />
-            </span>
-            @sanjuuu_x18
-          </a>
-        </p>
-      </footer>
     </div>
   );
 };
