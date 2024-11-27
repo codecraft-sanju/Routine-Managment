@@ -9,20 +9,20 @@ const RoutineItem = ({ routine, onEdit, onDelete, onUpdate }) => {
   };
 
   return (
-    <li className="flex items-center justify-between p-4 bg-white rounded-lg shadow hover:shadow-lg">
+    <li className="flex flex-col items-center justify-between p-4 space-y-4 bg-white rounded-lg shadow sm:flex-row hover:shadow-lg sm:space-y-0 sm:space-x-4">
       {routine.isEditing ? (
-        <div className="flex space-x-2">
+        <div className="flex flex-wrap items-center w-full space-y-2 sm:flex-nowrap sm:space-y-0 sm:space-x-4">
           <input
             type="text"
             value={updatedRoutine}
             onChange={(e) => setUpdatedRoutine(e.target.value)}
-            className="px-2 py-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 border rounded-lg sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <input
             type="time"
             value={updatedTime}
             onChange={(e) => setUpdatedTime(e.target.value)}
-            className="px-2 py-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full px-4 py-2 border rounded-lg sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
       ) : (
@@ -33,25 +33,25 @@ const RoutineItem = ({ routine, onEdit, onDelete, onUpdate }) => {
           <p className="text-sm text-gray-500">{routine.time}</p>
         </div>
       )}
-      <div className="space-x-2">
+      <div className="flex justify-center w-full space-x-2 sm:w-auto sm:justify-end">
         {routine.isEditing ? (
           <button
             onClick={saveChanges}
-            className="px-2 py-1 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+            className="w-full px-4 py-2 text-white bg-blue-500 rounded-lg sm:w-auto hover:bg-blue-600"
           >
             Save
           </button>
         ) : (
           <button
             onClick={() => onEdit(routine.id)}
-            className="px-2 py-1 text-white bg-yellow-500 rounded-lg hover:bg-yellow-600"
+            className="w-full px-4 py-2 text-white bg-yellow-500 rounded-lg sm:w-auto hover:bg-yellow-600"
           >
             Edit
           </button>
         )}
         <button
           onClick={() => onDelete(routine.id)}
-          className="px-2 py-1 text-white bg-red-500 rounded-lg hover:bg-red-600"
+          className="w-full px-4 py-2 text-white bg-red-500 rounded-lg sm:w-auto hover:bg-red-600"
         >
           Delete
         </button>
